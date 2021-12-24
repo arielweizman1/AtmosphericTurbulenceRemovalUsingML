@@ -1,33 +1,20 @@
 import multiprocessing
+
 multiprocessing.set_start_method('spawn', True)
 
 import argparse
 import os
-import numpy as np
-import math
-import sys
 
-import torchvision
-import torchvision.transforms as transforms
-
-from torch.utils.data import DataLoader
-from torchvision import datasets
-from torchvision.utils import make_grid
 from torch.utils.tensorboard import SummaryWriter
-from torch.autograd import Variable
 
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.autograd as autograd
-import torch
 from train import train
 from test import test, test_moving
-from models import UNet, Discriminator, weights_init
+from models import UNet, Discriminator
 from functions import *
-from data_util import MyDataset
 
 torch.backends.cudnn.benchmark = True
 torch.backends.cudnn.enabled = True
+
 
 def main(opt):
     writer = SummaryWriter()
@@ -54,9 +41,6 @@ def main(opt):
     if opt.mode == 'test':
         test(opt, log_dir)
         test_moving(opt, log_dir)
-        
-    
-                
 
 
 if __name__ == '__main__':
@@ -77,11 +61,9 @@ if __name__ == '__main__':
     parser.add_argument("--windows", type=bool, default=False, help="run on windows")
     parser.add_argument("--mode", type=str, default='test', help="train, test")
 
-
     parser.add_argument("--dataset_dir", type=str, default='/Users/Maayan/Documents/databases/mit_100_frames', help="path to dataset directory")
     parser.add_argument("--reference_dataset_path", type=str, default='/Users/Maayan/Documents/databases/mit', help="path to ground thruth dataset")
     parser.add_argument("--test_dataset_path", type=str, default='/Users/Maayan/Documents/databases/test/frames_256', help="path to test_dataset")
-
 
     parser.add_argument("--num_workers_dataloader", type=int, default=0, help="num workers for dataloader")
     parser.add_argument("--sample_num", type=int, default=20, help="number of images to random sample from each video")

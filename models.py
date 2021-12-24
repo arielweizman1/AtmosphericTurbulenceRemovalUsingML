@@ -1,9 +1,5 @@
-import torch.nn as nn
-import numpy as np
-import torch.nn.functional as F
-import torch
-
 from unet_parts import *
+
 
 def weights_init(m):
     classname = m.__class__.__name__
@@ -11,13 +7,13 @@ def weights_init(m):
     if classname.find('Conv') != -1:
         # apply a uniform distribution to the weights
         m.weight.data.normal_(0.0, 0.02)
-    
+
     # for every Linear layer in a model..
     if classname.find('Linear') != -1:
         # apply a uniform distribution to the weights and a bias=0
         m.weight.data.uniform_(0.0, 1.0)
         m.bias.data.fill_(0)
-    
+
     # for every Norm layer in a model..
     if classname.find('Norm') != -1:
         # apply a uniform distribution to the weights and a bias=0
@@ -45,7 +41,6 @@ class UNet(nn.Module):
         self.up6 = up(64, 32, alpha)
         self.outc = outconv(32, 1)
 
-
     def forward(self, x):
         x1 = self.inc(x)
         x2 = self.down1(x1)
@@ -61,7 +56,7 @@ class UNet(nn.Module):
         x = self.up5(x, x2)
         x = self.up6(x, x1)
         x = self.outc(x)
-        x = x.view(self.batch_size,self.n_channels,256,256)
+        x = x.view(self.batch_size, self.n_channels, 256, 256)
         return x
 
 
@@ -92,9 +87,9 @@ class Discriminator(nn.Module):
             nn.Conv2d(32, 64, kernel_size=1, stride=1),
             nn.LeakyReLU(alpha, inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2))
-        
-        self.fc1 = nn.Linear(64*8*8, 512)
-        #self.fc2 = nn.Linear(512, 1)
+
+        self.fc1 = nn.Linear(64 * 8 * 8, 512)
+        # self.fc2 = nn.Linear(512, 1)
 
     def forward(self, x):
         x1 = self.layer1(x)
@@ -105,9 +100,11 @@ class Discriminator(nn.Module):
         x6 = self.layer6(x5)
         x7 = x6.view(self.batch_size, -1)
         x8 = self.fc1(x7)
-        #x9 = self.fc2(x8)
+        # x9 = self.fc2(x8)
 
         return x8
+
+
 """
 class Discriminator_(nn.Module):
     def __init__(self, ngpu):

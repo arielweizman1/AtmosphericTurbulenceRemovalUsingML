@@ -1,11 +1,10 @@
-import torch
-from torch.autograd import Variable
 import numpy as np
+import torch
 import torch.autograd as autograd
 import torch.nn as nn
 from PIL import Image
+from torch.autograd import Variable
 from torchvision.utils import make_grid
-
 
 cuda = True if torch.cuda.is_available() else False
 Tensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
@@ -32,28 +31,32 @@ def compute_gradient_penalty(D, real_samples, fake_samples):
     gradient_penalty = ((gradients.norm(2, dim=1) - 1) ** 2).mean()
     return gradient_penalty
 
+
 def compute_L1_loss(input_imgs, output_im, opt, device):
     loss_L1 = nn.L1Loss()
     loss = torch.zeros(1)
     for i in range(opt.sample_num):
-        loss += loss_L1(input_imgs[:,i,:,:], output_im)
-    loss = (1000//opt.sample_num)*loss
-    #loss = loss/opt.sample_num
+        loss += loss_L1(input_imgs[:, i, :, :], output_im)
+    loss = (1000 // opt.sample_num) * loss
+    # loss = loss/opt.sample_num
 
     return loss.to(device=device)
+
 
 def denorm(x):
     out = (x + 1) / 2
     return out.clamp(0, 1)
 
+
 def convert_image(inp):
     inp = denorm(inp)
     inp = inp.to('cpu')
-    inp = np.clip(inp,0,1)
+    inp = np.clip(inp, 0, 1)
     return inp
 
+
 def convert_im(tensor, filename='', nrow=8, padding=2,
-               normalize=False, range=None, scale_each=False, pad_value=0, save_im = False):
+               normalize=False, range=None, scale_each=False, pad_value=0, save_im=False):
     grid = make_grid(tensor, nrow=nrow, padding=padding, pad_value=pad_value,
                      normalize=normalize, range=range, scale_each=scale_each)
     # Add 0.5 after unnormalizing to [0, 255] to round to nearest integer
@@ -62,6 +65,7 @@ def convert_im(tensor, filename='', nrow=8, padding=2,
     if save_im:
         im.save(filename)
     return np.rollaxis(ndarr, 2, 0)
+
 
 def denormalize(image_tensor):
     # denormalize the normalized image tensor(N,C,H,W) with mean=0.5 and std=0.5 for each channel
