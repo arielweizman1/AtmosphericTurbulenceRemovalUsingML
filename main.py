@@ -56,7 +56,7 @@ if __name__ == '__main__':
     parser.add_argument("--lambda_gp", type=float, default=10, help="Loss weight for gradient penalty")
     parser.add_argument("--img_size", type=int, default=256, help="size of each image dimension")
     parser.add_argument("--channels", type=int, default=3, help="number of image channels")
-    parser.add_argument("--sample_interval", type=int, default=30, help="interval betwen image samples")
+    parser.add_argument("--sample_interval", type=int, default=30, help="interval between image samples")
     parser.add_argument("--load_model", type=str, default='', help="path to model to continue training")
     parser.add_argument("--windows", type=bool, default=False, help="run on windows")
     parser.add_argument("--mode", type=str, default='test', help="train, test")
