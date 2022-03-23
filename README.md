@@ -13,11 +13,11 @@ Removing atmospheric turbulence through deep learning
   </p>
 This is the code for Our final project in Electrical Engineering degree. 
 
-- [COVID 19 Detection](#covid-19-detection)
+- [Removing atmospheric turbulence through deep learning](#removing-atmospheric-turbulence-through-deep-learning)
   * [Background](#background)
-  * [Files in the repository](#files-in-the-repository)
+  * [Directories in the repository](#directories-in-the-repository)
   * [Data](data)
-  * [Working with the model](#working-with-the-model)
+  * [Working with the code](#working-with-the-code)
   * [References](#references)
 
 ## Background
@@ -28,42 +28,31 @@ The project goal is to use a deep learning algorithm for removing atmospheric tu
 ## Directories in the repository
 
 
-|File name         |File names |  Purpsoe |
+|Direcrory name         |File names |  Purpsoe |
 |----------------------|------|------|
-|`TurbulenceSim_v1-master:`| `simulator.py` , |This directory includes scripts to produce video with turbulence effect based on mathematical Lemmas related to Zernike polynomials as appeared in the article "Simulating Anisoplanatic Turbulence by Sampling Correlated Zernike Coefficients, IEEE ICCP 2020".The main file is `simulator.py`, which receives an image as input and converts it to grayscale if needed, defines the necessary parameters to determine the turbulence strength, uses the other files to compute mathematical and physical variables, and generates a static scene video with turbulence effect.|
-|`Video2frames:`| We used the files in this directory to convert a video into frames in two forms:	`video2frames.py`: taking one video and saving it as frame by frame.	`Frames_in_form_of_video.py`: taking one video and saving each 15 frames in form of a video. We used this form as an input to our network.|
-|`Creating_the_Covid_19_Dataset.ipynb`| code for fetching only PA X-ray images from the covid dataset. Colaboratory format|
-|`Creating_the_Covid_19_Dataset.py`| code for fetching only PA X-ray images from the covid dataset. py format|
-|`/COVID19/dataset/*`| folders contain the train and test images for covid-19|
+|`TurbulenceSim_v1-master:`| `simulator.py` <br>  `Integrals_Spatial_Corr.py`<br>  `Motion_Compensate.py` <br>  `TurbSim_v1_main.py`|This directory includes scripts to produce video with turbulence effect based on mathematical Lemmas related to Zernike polynomials as appeared in the article "Simulating Anisoplanatic Turbulence by Sampling Correlated Zernike Coefficients, IEEE ICCP 2020".<br> The main file is `simulator.py`, which receives an image as input and converts it to grayscale if needed, defines the necessary parameters to determine the turbulence strength, uses the other files to compute mathematical and physical variables, and generates a static scene video with turbulence effect.|
+|`Video2frames:`|`video2frames.py`<br>  `Frames_in_form_of_video.py` | We used the files in this directory to convert a video into frames in two forms:	<br> o `video2frames.py`: taking one video and saving it as frame by frame.<br>	o	`Frames_in_form_of_video.py`: taking one video and saving each 15 frames in form of a video. We used this form as an input to our network.|
+|`TSR_WGAN_for_turbulence_removal`| |This directory includes the networks introduced in the article "Neutralizing the impact of atmospheric turbulence on complex scene imaging via deep learning" with some adjustments to solve our problem.There are Two directories:   <br>o	`Code`: It includes the model, the network, the configuration, the losses, the two main scripts (main_train.py for running train mode and main_test.py for testing the network), and other helping files.  <br> o `Data`: It includes the checkpoint where the trained model was saved.|
+|`Crop_video:`|`Crop_video` |The only script in this dire:
+|`Motion_tracking_by_opticalflow`| `lucasekande.py`|This directory includes the script `lucasekande.py` that picks pixels in the video by ShiTomasi algorithm and then tracks them in each frame using optical flow (lucas kande algorithm).<br> The script also plots several graphs, for instance, motion variance per pixel and X_Y for multiple/single pixel and saves the video where the picked pixels while being tracked.|
 
 
 
 
 ## Data
-We used 2 datasets from 2 sources.
-* Pneumonia dataset: set of supervised X-ray images that have been labeled by radiologists as Normal / Pneumonia.
-  * This dataset was loaded from [kaggle](https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia)
-* Covid dataset: we created this dataset usind 2 surces:
-  *  Normal : we loaded images from the *test set* above
-  *  Covid : we used [supervised X-ray images](https://www.kaggle.com/bachrr/covid-chest-xray) that have been labeld by radiologists as Covid infected.
-     *   we used the `Creating_the_Covid_19_Dataset.ipynb` code to fetch only PA images.
-     *   we split the data to train and test randomly. the final dataset used for this project can be found under the `/COVID19/dataset/` folders.
- 
- We upload the dataset to google drive and accessed the drive while training.
- 
-## Working with the model
-* We trained the model using Google Colab. At the beginning of the code, you can change the directories to work with during the training. more details in the code documentation.
-* There is an option to change the depth of the classifier (version 0,1,2,3,4) and you can add more if you want.
-you can also play with the pretrained model. we chose efficientNet-b0, but you can try other.
 
+The data for training was too big to upload thus the checkpoints were uploaded .
+
+## Working with the code
+
+Instructions are in the directories or in the scripts comments
 
 ## References
-[1] Pneumonia Dataset source: https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia
+[1] Simulator paper: <br> Nicholas Chimitt and Stanley H. Chan, ‘‘Simulating Anisoplanatic Turbulence by Sampling Correlated Zernike Coefficients’’, Optical Engineering, 59(8), 083101, July 2020.
 
-[2] Covid-19 Dataset source: https://www.kaggle.com/bachrr/covid-chest-xray
+[2] Simulator web page, including simulator code: https://engineering.purdue.edu/ChanGroup/project_turbulence_TurbSim_v1.html
 
-[3] Covid-19 detection source: https://www.kaggle.com/bachrr/detecting-covid-19-in-x-ray-images-with-tensorflow
+[3] TSR -WGAN paper: Jin, D., Chen, Y., Lu, Y. et al. Neutralizing the impact of atmospheric turbulence on complex scene imaging via deep learning. Nat Mach Intell 3, 876–884 (2021).
 
-[4] Pneumonia detection source: https://www.kaggle.com/teyang/pneumonia-detection-resnets-pytorch
-
+[4] TSR -WGAN web page, including network code: https://www.nature.com/articles/s42256-021-00392-1?proof=tNature
 
