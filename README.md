@@ -24,6 +24,7 @@ This is the code for Our final project in Electrical Engineering degree.
 ## Background
 
 A long-distance imaging systems can be strongly affected by atmospheric turbulence which causes geometric distortion (motion), space and time-varying blur.
+ Atmospheric turbulence is a physical natural phenomenon called where the light wave passes through atmospheric air vortices that occur due to a change in the refraction coefficients of the air.
 <br> The project goal is to use a deep learning algorithm for removing atmospheric turbulence noise in videos.
 
 ## Directories in the repository
