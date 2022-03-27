@@ -8,9 +8,10 @@ Removing atmospheric turbulence through deep learning
  </h1>
  </h1>
   <p align="center">
-    <a • href="https://github.com/arielweizman1">Ariel Weizman</a> 
-    <a • href="">Fadi Salameh</a>
+    <a • href="https://www.linkedin.com/in/ariel-weizman/">Ariel Weizman</a> 
+    <a • href="https://www.linkedin.com/in/fadi-salameh-3195241a3">Fadi Salameh</a>
   </p>
+
 This is the code for Our final project in Electrical Engineering degree. 
 
 - [Removing atmospheric turbulence through deep learning](#removing-atmospheric-turbulence-through-deep-learning)
